@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Biblioteca de episódios do podcast Sexta ON, da Igreja Batista Central Santo André: busque por tema, ministério ou assunto.">
+<title>Biblioteca Sexta ON</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  :root {
+    --paper: #FBF7F4;
+    --surface: #FFFFFF;
+    --ink: #16211F;
+    --ink-soft: #5C6864;
+    --ink-faint: #6B645C;
+    --line: #E6DBD2;
+    --chip: #F1E9E1;
+    --red: #E01015;
+    --red-deep: #B60D11;
+    --red-ink: #FFFFFF;
+    --band: #14201E;
+    --band-ink: #FBF7F4;
+    --shadow: 0 1px 2px rgba(20,16,12,0.04), 0 10px 26px -14px rgba(20,16,12,0.28);
+    --focus: #1B6E63;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #111815;
+      --surface: #1A221F;
+      --ink: #F3ECE3;
+      --ink-soft: #B7AA9B;
+      --ink-faint: #A09384;
+      --line: #2E3A35;
+      --chip: #232D29;
+      --red: #FF5148;
+      --red-deep: #FF6E63;
+      --red-ink: #1A0604;
+      --band: #0A1412;
+      --band-ink: #F3ECE3;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 26px -14px rgba(0,0,0,0.7);
+      --focus: #6FC7B8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #111815;
+    --surface: #1A221F;
+    --ink: #F3ECE3;
+    --ink-soft: #B7AA9B;
+    --ink-faint: #A09384;
+    --line: #2E3A35;
+    --chip: #232D29;
+    --red: #FF5148;
+    --red-deep: #FF6E63;
+    --red-ink: #1A0604;
+    --band: #0A1412;
+    --band-ink: #F3ECE3;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 26px -14px rgba(0,0,0,0.7);
+    --focus: #6FC7B8;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Alexandria", -apple-system, "Segoe UI", sans-serif;
+    padding-inline: 20px;
+    padding-block: 0 48px;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  /* ---------- hero band ---------- */
+  .band {
+    background: var(--band);
+    color: var(--band-ink);
+    margin-inline: -20px;
+    padding: 34px 20px 30px;
+    margin-bottom: 26px;
+  }
+  .band-inner { max-width: 1180px; margin: 0 auto; }
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--band-ink);
+    opacity: 0.6;
+  }
+  h1.headline {
+    font-weight: 800;
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.06;
+    margin: 0 0 12px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  h1.headline .switch {
+    color: var(--red);
+  }
+  .lede {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 58ch;
+    color: var(--band-ink);
+    opacity: 0.82;
+    margin: 0 0 26px;
+  }
+
+  /* pill search, echoes the toggle-switch mark */
+  .search-pill {
+    position: relative;
+    max-width: 560px;
+    background: var(--band-ink);
+    border-radius: 999px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,0.45);
+  }
+  .search-pill svg { flex: none; margin-left: 14px; }
+  .search-pill svg path, .search-pill svg circle { stroke: var(--ink-faint); }
+  .search-pill input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: "Alexandria", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #16211F;
+    padding: 12px 4px;
+    min-width: 0;
+  }
+  .search-pill input::placeholder { color: #6B645C; }
+  .search-pill input:focus { outline: none; }
+  .search-pill .dot {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .stat-strip {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--band-ink);
+    opacity: 0.7;
+  }
+  .stat-strip b { font-weight: 600; opacity: 1; }
+
+  /* ---------- controls ---------- */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: var(--paper);
+    padding-block: 12px 14px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .chip {
+    font-family: "Alexandria", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--chip);
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  }
+  .chip:hover { border-color: var(--red); color: var(--ink); }
+  .chip[aria-pressed="true"] {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--red-ink);
+  }
+  .chip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin-right: 2px; }
+  .chip .count { opacity: 0.7; font-weight: 500; margin-left: 3px; }
+
+  .sort-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  #resultCount {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  select#sortSelect {
+    font-family: "Alexandria", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 10px;
+  }
+
+  /* ---------- grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 18px;
+    padding-top: 20px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 4px 4px rgba(20,16,12,0.06), 0 18px 34px -16px rgba(20,16,12,0.35); }
+  .thumb-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--chip);
+    overflow: hidden;
+  }
+  .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .play-badge {
+    position: absolute;
+    inset: auto auto 10px 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(20,16,12,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-badge svg { margin-left: 2px; }
+  .ep-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: rgba(20,16,12,0.72);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+  }
+  .card-body {
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .cat-tag {
+    align-self: flex-start;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--red);
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.32;
+    color: var(--ink);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-blurb {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+  .card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 4px;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+  .card-foot .stats { display: flex; gap: 10px; }
+  .card-foot .stats span { display: inline-flex; align-items: center; gap: 3px; }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+  }
+  .empty-state .big { font-size: 34px; margin-bottom: 8px; }
+  .empty-state button {
+    margin-top: 14px;
+    font-family: "Alexandria", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--red);
+    background: none;
+    border: 1px solid var(--red);
+    border-radius: 999px;
+    padding: 8px 18px;
+    cursor: pointer;
+  }
+
+  footer.note {
+    max-width: 1180px;
+    margin: 40px auto 0;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card-title { font-size: 13.5px; }
+    .card-blurb { display: none; }
+    .band { padding: 26px 16px 24px; }
+    .controls { position: static; }
+    .chip-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
+  }
+  /* ---- refinamentos da revisão de design ---- */
+  .band { background: radial-gradient(900px 300px at 85% -20%, color-mix(in srgb, var(--red) 26%, transparent), transparent 70%), var(--band); padding: 40px 20px 32px; margin-bottom: 24px; }
+  .lede { margin-bottom: 24px; text-wrap: pretty; }
+  .stat-strip { margin-top: 24px; }
+  .controls { position: static; padding-block: 16px; margin-bottom: 0; }
+  .sort-row { margin-top: 16px; }
+  .grid { gap: 24px; padding-top: 24px; }
+  .search-pill { transition: box-shadow .2s; }
+  .search-pill:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 55%, transparent), 0 12px 30px -12px rgba(0,0,0,.45); }
+  .search-pill input, #sortSelect { font-size: 16px; }
+  .search-pill .dot { transition: transform .2s; }
+  .search-pill:focus-within .dot { transform: scale(1.08); }
+  .chip { transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease; min-height: 40px; display: inline-flex; align-items: center; flex: none; }
+  .chip:hover { transform: translateY(-1px); }
+  .chip:active { transform: scale(.96); }
+  .chip[aria-pressed="true"] { box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--red) 75%, transparent); }
+  .chip .count { font-size: 12px; }
+  #sortSelect, .empty-state button { min-height: 40px; }
+  .card:hover { border-color: color-mix(in srgb, var(--red) 35%, var(--line)); }
+  .thumb-wrap { background: linear-gradient(135deg, var(--chip), var(--line)); }
+  .thumb-wrap img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .card:hover .thumb-wrap img { transform: scale(1.05); }
+  .play-badge { transition: background .2s, transform .2s; }
+  .card:hover .play-badge { background: var(--red); transform: scale(1.12); }
+  .card-body { padding: 16px 18px 18px; gap: 10px; }
+  .cat-tag { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); font-size: 11.5px; letter-spacing: .04em; }
+  .cat-tag::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+  .card-title { text-wrap: balance; overflow-wrap: anywhere; }
+  .card-blurb { text-wrap: pretty; }
+  .card-foot { padding-top: 12px; margin-top: auto; font-size: 12px; flex-wrap: wrap; gap: 4px 10px; }
+  .empty-state .big { font-size: 24px; font-weight: 600; margin: 0 0 8px; color: var(--ink); }
+  @media (max-width: 560px) {
+    body { padding-inline: 16px; }
+    .band { margin-inline: -16px; padding: 28px 16px 24px; }
+    .grid { gap: 12px; padding-top: 16px; }
+    .card-body { padding: 10px 10px 12px; gap: 6px; }
+    .card-foot { font-size: 12px; }
+    .ep-badge { font-size: 11.5px; }
+    .chip-row { overscroll-behavior-x: contain; scrollbar-width: none; mask-image: linear-gradient(90deg, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); }
+    .chip-row::-webkit-scrollbar { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .card:hover, .chip:hover { transform: none; } }
+  /* ---- tipografia ---- */
+  .cat-tag { font-size: 12px; letter-spacing: .06em; }
+  .card-title { font-weight: 600; letter-spacing: -0.005em; line-height: 1.3; }
+  .card-blurb { font-size: 13.5px; line-height: 1.5; }
+  footer.note { font-size: 12.5px; }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+    .card-title { font-size: 16px; }
+    .card-body { padding: 14px 16px 16px; gap: 8px; }
+    .card-blurb { display: -webkit-box; }
+  }
+  /* ---- botões e compartilhar ---- */
+  .band-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; font-family: "Alexandria", sans-serif; font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer; border: 1px solid var(--red); background: var(--red); color: var(--red-ink); transition: transform .18s ease, filter .18s ease; }
+  .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--band-ink); border-color: color-mix(in srgb, var(--band-ink) 40%, transparent); }
+  .card-wrap { position: relative; display: flex; transition: transform .14s ease; }
+  .card-wrap:hover { transform: translateY(-3px); }
+  .card-wrap .card { flex: 1; min-width: 0; }
+  .card:hover { transform: none; }
+  .share-btn { position: absolute; top: 8px; right: 8px; width: 40px; height: 40px; border-radius: 999px; border: none; background: rgba(20,16,12,.72); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, transform .2s; }
+  .share-btn:hover { background: var(--red); transform: scale(1.08); }
+  #toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 20; }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+  /* ---- filtros em caixa de seleção no celular ---- */
+  [hidden] { display: none !important; }
+  .filter-selects { display: none; }
+  .filter-selects label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); min-width: 0; }
+  .filter-selects select { width: 100%; min-height: 44px; font-family: "Alexandria", sans-serif; font-size: 16px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; text-overflow: ellipsis; }
+  .filter-selects select.active { border-color: var(--red); box-shadow: 0 0 0 1px var(--red); }
+  @media (max-width: 700px) {
+    .chip-row { display: none !important; }
+    .filter-selects { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .filter-selects.single { grid-template-columns: 1fr; }
+  }
+  /* ---- logo no topo ---- */
+  .band-inner { position: relative; }
+  .band-logo { position: absolute; top: -18px; right: 0; width: 94px; height: auto; display: block; }
+  .brand-row { padding-right: 120px; }
+  @media (max-width: 560px) {
+    .band-logo { width: 58px; top: -12px; }
+    .brand-row { padding-right: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="band-inner">
+    <svg class="band-logo" viewBox="0 0 326.027 223.208" role="img" aria-label="Sexta ON" xmlns="http://www.w3.org/2000/svg"><path fill-rule="nonzero" fill="#fff" d="M 226.871094 154.3125 C 226.828125 176.679688 208.734375 194.769531 186.367188 194.8125 L 52.332031 194.8125 C 29.964844 194.769531 11.871094 176.679688 11.832031 154.3125 L 11.832031 154.277344 C 11.871094 131.914062 29.964844 113.816406 52.332031 113.777344 L 186.367188 113.777344 C 208.734375 113.816406 226.828125 131.914062 226.871094 154.277344 Z M 186.367188 107.800781 L 52.332031 107.800781 C 26.660156 107.800781 5.851562 128.609375 5.851562 154.277344 L 5.851562 154.3125 C 5.851562 179.980469 26.660156 200.789062 52.332031 200.789062 L 186.367188 200.789062 C 212.039062 200.789062 232.847656 179.980469 232.847656 154.3125 L 232.847656 154.277344 C 232.847656 128.609375 212.039062 107.800781 186.367188 107.800781 "/><path fill-rule="nonzero" fill="#fff" d="M 315.824219 194.890625 L 293.238281 194.890625 L 264.027344 150.167969 L 263.917969 150.167969 L 263.917969 194.890625 L 241.441406 194.890625 L 241.441406 111.574219 L 264.027344 111.574219 L 293.238281 155.519531 L 293.347656 155.519531 L 293.347656 111.574219 L 315.824219 111.574219 Z M 315.824219 194.890625 "/><path fill-rule="nonzero" fill="#fff" d="M 280.945312 81.460938 C 287.136719 81.460938 291.371094 76.332031 291.371094 69.417969 C 291.371094 62.503906 287.136719 57.371094 280.945312 57.371094 C 274.539062 57.371094 270.195312 62.949219 270.195312 69.417969 C 270.195312 76.109375 274.539062 81.460938 280.945312 81.460938 M 246.742188 69.640625 C 246.742188 49.675781 260.097656 36.179688 273.5625 36.179688 C 282.902344 36.179688 288.875 41.089844 292.347656 46.105469 L 294.519531 37.964844 L 314.28125 37.964844 L 314.28125 100.871094 L 294.519531 100.871094 L 292.347656 92.726562 C 288.875 97.746094 282.902344 102.652344 273.5625 102.652344 C 260.097656 102.652344 246.742188 89.160156 246.742188 69.640625 M 227.722656 37.964844 L 243.25 37.964844 L 243.25 57.371094 L 227.722656 57.371094 L 227.722656 73.433594 C 227.722656 79.789062 232.390625 82.132812 238.472656 82.132812 C 240.207031 82.132812 242.054688 81.910156 244.007812 81.574219 L 244.007812 101.425781 C 240.535156 102.207031 237.601562 102.652344 232.714844 102.652344 C 214.257812 102.652344 205.351562 91.5 205.351562 74.882812 L 205.351562 57.371094 L 196.988281 57.371094 L 196.988281 37.964844 L 205.351562 37.964844 L 205.351562 23.464844 L 227.722656 23.464844 Z M 177.261719 68.636719 L 198.21875 100.871094 L 171.941406 100.871094 L 163.144531 84.472656 L 162.929688 84.472656 L 154.242188 100.871094 L 129.375 100.871094 L 149.898438 69.527344 L 129.59375 37.964844 L 154.785156 37.964844 L 163.582031 54.472656 L 163.796875 54.472656 L 172.484375 37.964844 L 197.351562 37.964844 Z M 108.949219 62.503906 C 108.839844 58.152344 106.019531 54.359375 101.023438 54.359375 C 96.460938 54.359375 92.660156 57.484375 91.03125 62.503906 Z M 69.316406 69.527344 C 69.316406 49.898438 82.996094 36.179688 101.132812 36.179688 C 117.527344 36.179688 130.882812 47.332031 130.882812 68.414062 C 130.882812 71.089844 130.667969 73.542969 130.339844 75.664062 L 91.902344 75.664062 C 94.832031 81.6875 101.566406 84.472656 108.839844 84.472656 C 115.464844 84.472656 121.328125 82.242188 126.757812 79.789062 L 126.757812 97.96875 C 120.460938 101.09375 113.292969 102.652344 105.582031 102.652344 C 82.128906 102.652344 69.316406 88.488281 69.316406 69.527344 M 62.191406 40.640625 L 62.191406 59.824219 C 57.847656 57.257812 49.921875 55.03125 43.191406 55.03125 C 39.28125 55.03125 37.21875 55.808594 37.21875 57.371094 C 37.21875 58.933594 39.390625 59.9375 45.359375 61.277344 C 55.894531 63.617188 66.535156 67.519531 66.535156 81.128906 C 66.535156 94.289062 56.4375 102.652344 38.085938 102.652344 C 28.636719 102.652344 20.929688 100.421875 15.714844 97.523438 L 15.714844 76.890625 C 21.253906 80.679688 27.988281 83.804688 37 83.804688 C 41.5625 83.804688 44.167969 83.023438 44.167969 81.238281 C 44.167969 79.230469 40.910156 78.5625 33.523438 76.554688 C 24.078125 73.992188 14.957031 69.304688 14.957031 57.484375 C 14.957031 45.214844 24.730469 36.179688 42.105469 36.179688 C 49.378906 36.179688 57.089844 37.855469 62.191406 40.640625 "/><path fill-rule="nonzero" fill="#fff" d="M 220.5 153.234375 C 220.5 172.042969 205.253906 187.289062 186.445312 187.289062 C 167.636719 187.289062 152.390625 172.042969 152.390625 153.234375 C 152.390625 134.425781 167.636719 119.179688 186.445312 119.179688 C 205.253906 119.179688 220.5 134.425781 220.5 153.234375 "/></svg>
+    <div class="brand-row">
+      <span class="brand-mark">Igreja Batista Central · Santo André</span>
+    </div>
+    <h1 class="headline">Biblioteca <span class="switch">Sexta ON</span></h1>
+    <p class="lede">Dois anos de conversas sobre fé, família, mente e vida real — mais de cem episódios, agora fáceis de encontrar. Busque por assunto ou explore por tema.</p>
+
+    <label class="search-pill" for="searchInput">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke-width="2"/>
+        <path d="M20 20L16.5 16.5" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input id="searchInput" type="search" aria-label="Buscar episódios" placeholder="Buscar por tema — ansiedade, família, fim dos tempos..." autocomplete="off">
+      <span class="dot" aria-hidden="true">ON</span>
+    </label>
+
+    <div class="stat-strip" id="statStrip"></div>
+    <div class="band-actions">
+      <a class="btn" href="https://www.youtube.com/playlist?list=PLs4H2lEHDyQATQP6AavyL-hnSQVdNsmbr" target="_blank" rel="noopener">Ver todos no canal do YouTube</a>
+      <button class="btn ghost" id="shareSite" type="button">Compartilhar a biblioteca</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="chip-row" id="chipRow"></div>
+    <div class="chip-row" id="minRow"></div>
+    <div class="filter-selects" id="filterSelects">
+      <label><span>Tema</span><select id="themeSelect"></select></label>
+      <label id="minSelectWrap"><span>Ministério</span><select id="minSelect"></select></label>
+    </div>
+    <div class="sort-row">
+      <span id="resultCount" role="status" aria-live="polite"></span>
+      <label style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12.5px; color:var(--ink-soft); font-weight:600;">Ordenar</span>
+        <select id="sortSelect">
+          <option value="recent">Mais recentes</option>
+          <option value="views">Mais assistidos</option>
+          <option value="comments">Mais comentados</option>
+          <option value="az">A–Z</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer class="note">
+    Catálogo construído a partir dos episódios publicados no canal @IBCSantoAndréOnline (YouTube), playlist "SEXTA ON – Podcast". As categorias são sugestões temáticas geradas a partir do título de cada episódio — clique em qualquer card para assistir direto no YouTube. Dados atualizados em 25/11/2026.
+  </footer>
+</div>
+
+<script>
+const DATA = [{"videoId": "rvQJUnex9PE", "title": "Estamos, mas não somos: EVANGELHO GLOBAL", "date": "2024-08-17", "views": 970, "comments": 3, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=rvQJUnex9PE", "ep": 1, "ministry": null}, {"videoId": "Ea9C9P_jvxw", "title": "A interconectividade religiosa: É saudável?", "date": "2024-08-24", "views": 617, "comments": 2, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=Ea9C9P_jvxw", "ep": 2, "ministry": null}, {"videoId": "G-iq9Xbf6XM", "title": "Igreja INCLUSIVA: O que é?", "date": "2024-08-31", "views": 500, "comments": 4, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=G-iq9Xbf6XM", "ep": 3, "ministry": null}, {"videoId": "LYN_TTFWLeA", "title": "Criptomoeda e governo único: É o fim dos tempos?", "date": "2024-09-07", "views": 518, "comments": 1, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=LYN_TTFWLeA", "ep": 4, "ministry": null}, {"videoId": "OHm3ZHFBLdw", "title": "E o Espírito Santo: Onde está o Espírito Santo?", "date": "2024-09-14", "views": 460, "comments": 1, "category": "Teologia & doutrina", "topic": null, "url": "https://www.youtube.com/watch?v=OHm3ZHFBLdw", "ep": 5, "ministry": null}, {"videoId": "FK47PilKFgc", "title": "Fuja da heresia! Como se foge da serpente.", "date": "2024-09-21", "views": 590, "comments": 1, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=FK47PilKFgc", "ep": 6, "ministry": null}, {"videoId": "N2VkrgOEJ5Y", "title": "O impacto da pornografia no cérebro", "date": "2024-09-28", "views": 1305, "comments": 5, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=N2VkrgOEJ5Y", "ep": 7, "ministry": null}, {"videoId": "4Mj47wj2V3I", "title": "Igreja não vota, cristão vota!", "date": "2024-10-05", "views": 445, "comments": 2, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=4Mj47wj2V3I", "ep": 8, "ministry": null}, {"videoId": "MTiqVW53zRI", "title": "Os benefícios da oração no sistema neuronal", "date": "2024-10-18", "views": 490, "comments": 2, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=MTiqVW53zRI", "ep": 9, "ministry": null}, {"videoId": "UHpl1qYBRDQ", "title": "Outubro rosa: A importância do diagnóstico", "date": "2024-11-01", "views": 72, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=UHpl1qYBRDQ", "ep": 10, "ministry": null}, {"videoId": "pp2Y6ekjHLI", "title": "EducAÇÃO", "date": "2024-11-09", "views": 487, "comments": 0, "category": "Cultura & sociedade", "topic": "EducAÇÃO", "url": "https://www.youtube.com/watch?v=pp2Y6ekjHLI", "ep": 11, "ministry": null}, {"videoId": "u6XuK7ngO4Q", "title": "O que diz a bíblia sobre beber álcool", "date": "2024-11-16", "views": 532, "comments": 1, "category": "Pecado & caráter", "topic": "O que diz a bíblia sobre beber álcool", "url": "https://www.youtube.com/watch?v=u6XuK7ngO4Q", "ep": 12, "ministry": null}, {"videoId": "tPnuwGpAB7U", "title": "O que a Bíblia diz sobre beber álcool?", "date": "2024-11-18", "views": 124, "comments": 0, "category": "Pecado & caráter", "topic": "O que a Bíblia diz sobre beber álcool?", "url": "https://www.youtube.com/watch?v=tPnuwGpAB7U", "ep": 13, "ministry": null}, {"videoId": "PAS3fxnJCtw", "title": "Tatuagem e Piercing", "date": "2024-11-23", "views": 800, "comments": 2, "category": "Pecado & caráter", "topic": "Tatuagem e Piercing", "url": "https://www.youtube.com/watch?v=PAS3fxnJCtw", "ep": 14, "ministry": null}, {"videoId": "uZOJU8J8HFM", "title": "Para quê serve a igreja? | IBC", "date": "2024-11-30", "views": 200, "comments": 2, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=uZOJU8J8HFM", "ep": 15, "ministry": null}, {"videoId": "3-y6-JWt4jE", "title": "É possível servir a Deus e não servir a igreja?", "date": "2024-12-07", "views": 239, "comments": 0, "category": "Liderança & serviço", "topic": "É possível servir a Deus e não servir a igreja?", "url": "https://www.youtube.com/watch?v=3-y6-JWt4jE", "ep": 16, "ministry": null}, {"videoId": "WARqe4WlT3E", "title": "Anjos e demônios no antigo testamento", "date": "2024-12-14", "views": 544, "comments": 1, "category": "Fim dos tempos", "topic": "Anjos e demônios no antigo testamento", "url": "https://www.youtube.com/watch?v=WARqe4WlT3E", "ep": 17, "ministry": null}, {"videoId": "B9pH-nsJN34", "title": "Anjos e demônios nos dias de Jesus", "date": "2024-12-21", "views": 329, "comments": 0, "category": "Fim dos tempos", "topic": "Anjos e demônios nos dias de Jesus", "url": "https://www.youtube.com/watch?v=B9pH-nsJN34", "ep": 18, "ministry": null}, {"videoId": "faKbsXWUe4Q", "title": "Anjos e demônios nos tempos da igreja", "date": "2024-12-28", "views": 411, "comments": 0, "category": "Fim dos tempos", "topic": "Anjos e demônios nos tempos da igreja", "url": "https://www.youtube.com/watch?v=faKbsXWUe4Q", "ep": 19, "ministry": null}, {"videoId": "sYSVgaYphb8", "title": "Escatologia e apocalipse", "date": "2025-01-04", "views": 634, "comments": 2, "category": "Fim dos tempos", "topic": "Escatologia e apocalipse", "url": "https://www.youtube.com/watch?v=sYSVgaYphb8", "ep": 20, "ministry": null}, {"videoId": "39U3dp3YRG8", "title": "Diferentes linhas escatológicas e apocalípticas", "date": "2025-01-11", "views": 618, "comments": 2, "category": "Reflexões da fé", "topic": "Diferentes linhas escatológicas e apocalípticas", "url": "https://www.youtube.com/watch?v=39U3dp3YRG8", "ep": 21, "ministry": null}, {"videoId": "m7q2JKnlb6Y", "title": "Arrebatamento e Tribulação", "date": "2025-01-18", "views": 665, "comments": 2, "category": "Fim dos tempos", "topic": "Arrebatamento e Tribulação", "url": "https://www.youtube.com/watch?v=m7q2JKnlb6Y", "ep": 22, "ministry": null}, {"videoId": "rPwisKClBPU", "title": "O milénio e as doutrinas", "date": "2025-01-25", "views": 415, "comments": 0, "category": "Fim dos tempos", "topic": "O milénio e as doutrinas", "url": "https://www.youtube.com/watch?v=rPwisKClBPU", "ep": 23, "ministry": null}, {"videoId": "s_2ZmY-x5D8", "title": "Podcast Kadu", "date": "2025-01-29", "views": 51, "comments": 0, "category": "Fim dos tempos", "topic": "O milénio e as doutrinas", "url": "https://www.youtube.com/watch?v=s_2ZmY-x5D8", "ep": 24, "ministry": null}, {"videoId": "f7dprHSRuyc", "title": "O milénio e as doutrinas", "date": "2025-02-01", "views": 191, "comments": 1, "category": "Fim dos tempos", "topic": null, "url": "https://www.youtube.com/watch?v=f7dprHSRuyc", "ep": 25, "ministry": null}, {"videoId": "yPN1lHY87C8", "title": "Fortemente", "date": "2025-02-08", "views": 1883, "comments": 24, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=yPN1lHY87C8", "ep": 26, "ministry": null}, {"videoId": "Dx6GTDswCXQ", "title": "Fortemente", "date": "2025-02-15", "views": 1158, "comments": 3, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=Dx6GTDswCXQ", "ep": 27, "ministry": null}, {"videoId": "6XXODp9QSlI", "title": "Fortemente", "date": "2025-02-22", "views": 985, "comments": 7, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=6XXODp9QSlI", "ep": 28, "ministry": null}, {"videoId": "1cMcqdMRk9U", "title": "Fortemente", "date": "2025-03-01", "views": 479, "comments": 2, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=1cMcqdMRk9U", "ep": 29, "ministry": null}, {"videoId": "Iy5Mq567NtQ", "title": "Como as famílias cristãs devem lidar com o dinheiro", "date": "2025-03-08", "views": 477, "comments": 2, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=Iy5Mq567NtQ", "ep": 30, "ministry": null}, {"videoId": "jIAxnH9C-PQ", "title": "Como as famílias cristãs devem lidar com o dinheiro", "date": "2025-03-15", "views": 290, "comments": 0, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=jIAxnH9C-PQ", "ep": 31, "ministry": null}, {"videoId": "nAfp1TvjRCs", "title": "Gestão Financeira - Protegendo o seu casamento", "date": "2025-03-22", "views": 338, "comments": 0, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=nAfp1TvjRCs", "ep": 32, "ministry": null}, {"videoId": "M9L3CpedPt4", "title": "Gestão Financeira - Protegendo o seu casamento", "date": "2025-03-29", "views": 266, "comments": 1, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=M9L3CpedPt4", "ep": 33, "ministry": null}, {"videoId": "RF1yOHtVuVI", "title": "Como adorar ao Rei: O que é adoração?", "date": "2025-04-05", "views": 353, "comments": 0, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=RF1yOHtVuVI", "ep": 34, "ministry": "Central Praise"}, {"videoId": "WJebas2Pyp4", "title": "Como adorar ao Rei: adoração e a realidade", "date": "2025-04-12", "views": 467, "comments": 0, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=WJebas2Pyp4", "ep": 35, "ministry": "Central Praise"}, {"videoId": "ZXO712QUYMU", "title": "Como adorar ao Rei: adoração e louvor", "date": "2025-04-19", "views": 645, "comments": 1, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=ZXO712QUYMU", "ep": 36, "ministry": "Central Praise"}, {"videoId": "j5AGWjs1d9s", "title": "Como adorar ao Rei: adoração", "date": "2025-04-26", "views": 435, "comments": 5, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=j5AGWjs1d9s", "ep": 37, "ministry": "Central Praise"}, {"videoId": "v2mA_F9dKys", "title": "Como adorar ao Rei: adoração", "date": "2025-05-01", "views": 14, "comments": 0, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=v2mA_F9dKys", "ep": 38, "ministry": "Central Praise"}, {"videoId": "13_o-cy6g6s", "title": "Ansiedade e depressão: Pecado ou enfermidade?", "date": "2025-05-03", "views": 519, "comments": 1, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=13_o-cy6g6s", "ep": 39, "ministry": null}, {"videoId": "68XuKyH3--Q", "title": "Entendendo neurodivergências e TOC a luz da bíblia", "date": "2025-05-10", "views": 16, "comments": 0, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=68XuKyH3--Q", "ep": 40, "ministry": null}, {"videoId": "AN0eEqIALm4", "title": "Entendendo neurodivergências e TOC a luz da bíblia", "date": "2025-05-10", "views": 591, "comments": 1, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=AN0eEqIALm4", "ep": 41, "ministry": null}, {"videoId": "JAUVShA6Oi0", "title": "As emoções fortalecidas pela fé", "date": "2025-05-24", "views": 698, "comments": 4, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=JAUVShA6Oi0", "ep": 42, "ministry": null}, {"videoId": "QuTUC0GzNSg", "title": "Fé e ansiedades patológicas", "date": "2025-05-31", "views": 628, "comments": 1, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=QuTUC0GzNSg", "ep": 43, "ministry": null}, {"videoId": "4CKJrrMOFf0", "title": "Rotina Cristã Equilibrada", "date": "2025-06-07", "views": 472, "comments": 0, "category": "Adoração & vida espiritual", "topic": null, "url": "https://www.youtube.com/watch?v=4CKJrrMOFf0", "ep": 44, "ministry": null}, {"videoId": "ESpSUu5Bgck", "title": "Deus está morto - A crise na era secular", "date": "2025-06-14", "views": 250, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=ESpSUu5Bgck", "ep": 45, "ministry": null}, {"videoId": "BZmWdfIwEHo", "title": "Sinais do fim - Preparados para o grande dia", "date": "2025-06-21", "views": 823, "comments": 8, "category": "Fim dos tempos", "topic": null, "url": "https://www.youtube.com/watch?v=BZmWdfIwEHo", "ep": 46, "ministry": null}, {"videoId": "KmIvF-Q6f_c", "title": "As 10 virgens, o azeite e o retorno de Cristo", "date": "2025-06-27", "views": 447, "comments": 8, "category": "Fim dos tempos", "topic": null, "url": "https://www.youtube.com/watch?v=KmIvF-Q6f_c", "ep": 47, "ministry": null}, {"videoId": "DXCGfn-1NLY", "title": "As 10 virgens, o azeite e o retorno de Cristo", "date": "2025-07-04", "views": 116, "comments": 2, "category": "Fim dos tempos", "topic": null, "url": "https://www.youtube.com/watch?v=DXCGfn-1NLY", "ep": 48, "ministry": null}, {"videoId": "sOQGaePAvKs", "title": "Bolhas Ideológicas", "date": "2025-07-12", "views": 273, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=sOQGaePAvKs", "ep": 49, "ministry": null}, {"videoId": "NwRrYEUBozE", "title": "Reino em confronto, chamados para a batalha", "date": "2025-07-19", "views": 358, "comments": 2, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=NwRrYEUBozE", "ep": 50, "ministry": null}, {"videoId": "LLZChh0YhKI", "title": "Os segredos do inimigo: Como ele atua contra você", "date": "2025-07-26", "views": 458, "comments": 5, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=LLZChh0YhKI", "ep": 51, "ministry": null}, {"videoId": "s51-up26_UY", "title": "Autoridade que liberta: Assuma o seu lugar em Cristo", "date": "2025-08-02", "views": 507, "comments": 2, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=s51-up26_UY", "ep": 52, "ministry": null}, {"videoId": "TkFYC2DwdvM", "title": "Liberdade na Mente - Quebre fortalezas e pensamentos limitantes", "date": "2025-08-09", "views": 516, "comments": 1, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=TkFYC2DwdvM", "ep": 53, "ministry": null}, {"videoId": "OpCejjvXbY8", "title": "Armas de vitória - Use o poder espiritual disponível para você", "date": "2025-08-16", "views": 405, "comments": 1, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=OpCejjvXbY8", "ep": 54, "ministry": null}, {"videoId": "7JOiC5Y3KtY", "title": "Batalhas da vida real - Vencendo nos lares, igrejas e territórios", "date": "2025-08-23", "views": 521, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=7JOiC5Y3KtY", "ep": 55, "ministry": null}, {"videoId": "PDB7YKi2S08", "title": "Viva a vitória - Um estilo de vida de conquista espiritual", "date": "2025-08-30", "views": 464, "comments": 1, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=PDB7YKi2S08", "ep": 56, "ministry": null}, {"videoId": "CbFZraZtmuQ", "title": "Liderança e liderança cristã - princípios de liderança", "date": "2025-09-06", "views": 476, "comments": 4, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=CbFZraZtmuQ", "ep": 57, "ministry": null}, {"videoId": "_F79LiQ8wxw", "title": "Jesus - O modelo de liderança de excelência", "date": "2025-09-13", "views": 266, "comments": 0, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=_F79LiQ8wxw", "ep": 58, "ministry": null}, {"videoId": "LfY5fSj-hCQ", "title": "Liderança Multiplicadora - Definindo Legados", "date": "2025-09-20", "views": 276, "comments": 0, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=LfY5fSj-hCQ", "ep": 59, "ministry": null}, {"videoId": "GjcDsved_nA", "title": "Liderança Multiplicadora - Lealdade e habilidade", "date": "2025-09-27", "views": 249, "comments": 0, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=GjcDsved_nA", "ep": 60, "ministry": null}, {"videoId": "Sk4UPGjGO5s", "title": "Família em tempo de crise - Como permanecer firme em Deus", "date": "2025-10-04", "views": 269, "comments": 0, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=Sk4UPGjGO5s", "ep": 61, "ministry": null}, {"videoId": "GaltwAviFVA", "title": "Casamento Blindado", "date": "2025-10-11", "views": 360, "comments": 0, "category": "Mordomia & finanças", "topic": null, "url": "https://www.youtube.com/watch?v=GaltwAviFVA", "ep": 62, "ministry": null}, {"videoId": "cUo0v4TofZQ", "title": "Pais na era digital - Educando os filhos para o temor do Senhor", "date": "2025-10-18", "views": 306, "comments": 0, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=cUo0v4TofZQ", "ep": 63, "ministry": null}, {"videoId": "5FNK_bSSOWY", "title": "Filhos contracultura - Viver em obediencia em um mundo de rebeldia", "date": "2025-10-25", "views": 344, "comments": 1, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=5FNK_bSSOWY", "ep": 64, "ministry": null}, {"videoId": "RgJCAR09Tls", "title": "Família Cristã - Um farol em meio às trevas da sociedade", "date": "2025-11-01", "views": 502, "comments": 0, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=RgJCAR09Tls", "ep": 65, "ministry": null}, {"videoId": "lTiw4rW2SPU", "title": "Desigrejados e Digitais - A nova fé fora do templo", "date": "2025-11-07", "views": 200, "comments": 5, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=lTiw4rW2SPU", "ep": 66, "ministry": null}, {"videoId": "eDc-aHB7U6Y", "title": "O púlpito digital - Quem fala em nome da fé?", "date": "2025-11-15", "views": 223, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=eDc-aHB7U6Y", "ep": 67, "ministry": null}, {"videoId": "pvfFfSFkP3Q", "title": "A fé e o mercado - Quando o sagrado encontra o consumo", "date": "2025-11-22", "views": 437, "comments": 1, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=pvfFfSFkP3Q", "ep": 68, "ministry": null}, {"videoId": "IRaI2y5XAr8", "title": "Reformar ou Recomeçar? O futuro da Igreja Brasileira", "date": "2025-11-29", "views": 254, "comments": 0, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=IRaI2y5XAr8", "ep": 69, "ministry": null}, {"videoId": "6BCwFtFjrcc", "title": "Natal é Cristão ou cultural?", "date": "2025-12-05", "views": 234, "comments": 14, "category": "Teologia & doutrina", "topic": null, "url": "https://www.youtube.com/watch?v=6BCwFtFjrcc", "ep": 70, "ministry": null}, {"videoId": "PcmQBVwqTzY", "title": "Quem moldou o Natal que conhecemos: a Religião ou o Comércio?", "date": "2025-12-12", "views": 125, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=PcmQBVwqTzY", "ep": 71, "ministry": null}, {"videoId": "mnzlRuOy6qw", "title": "Natal é Adaptação ou Transformação Religiosa?", "date": "2025-12-19", "views": 144, "comments": 1, "category": "Cultura & sociedade", "topic": "Natal é Adaptação ou Transformação Religiosa?", "url": "https://www.youtube.com/watch?v=mnzlRuOy6qw", "ep": 72, "ministry": null}, {"videoId": "tXVES4lV10k", "title": "O Natal Ainda Faz Sentido Hoje?", "date": "2025-12-26", "views": 104, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=tXVES4lV10k", "ep": 73, "ministry": null}, {"videoId": "vERPLxCl7Ls", "title": "2026 - E agora o que fazer?", "date": "2026-01-02", "views": 203, "comments": 1, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=vERPLxCl7Ls", "ep": 74, "ministry": null}, {"videoId": "iQt8WRberPs", "title": "Orando Pela Igreja da Venezuela", "date": "2026-01-09", "views": 351, "comments": 4, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=iQt8WRberPs", "ep": 75, "ministry": null}, {"videoId": "06GxOpVbJqs", "title": "Orando pela Igreja da Venezuel ep.02", "date": "2026-01-16", "views": 153, "comments": 3, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=06GxOpVbJqs", "ep": 76, "ministry": null}, {"videoId": "EZsD5x1bbec", "title": "Escolha Não Pecar", "date": "2026-01-23", "views": 343, "comments": 3, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=EZsD5x1bbec", "ep": 77, "ministry": null}, {"videoId": "4aSRZeIOBMs", "title": "A Verdade é Sempre a Verdade?", "date": "2026-01-31", "views": 558, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=4aSRZeIOBMs", "ep": 78, "ministry": null}, {"videoId": "GWb0SBPPS5w", "title": "Foi Deus Quem Falou Mesmo?", "date": "2026-02-07", "views": 555, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=GWb0SBPPS5w", "ep": 79, "ministry": null}, {"videoId": "PF9OdXEcJtE", "title": "O Preço do Agora", "date": "2026-02-14", "views": 500, "comments": 3, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=PF9OdXEcJtE", "ep": 80, "ministry": null}, {"videoId": "KDbHzr5Id18", "title": "Vale a Pena Ser Bonzinho?", "date": "2026-02-21", "views": 400, "comments": 0, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=KDbHzr5Id18", "ep": 81, "ministry": null}, {"videoId": "umxDfTCAMAU", "title": "Decisões e Destinos", "date": "2026-02-27", "views": 333, "comments": 3, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=umxDfTCAMAU", "ep": 82, "ministry": null}, {"videoId": "STZgdHFqERs", "title": "Gula", "date": "2026-03-07", "views": 1167, "comments": 8, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=STZgdHFqERs", "ep": 83, "ministry": "Geração Mulher"}, {"videoId": "1lZeLfo8qk0", "title": "Luxúria", "date": "2026-03-14", "views": 1022, "comments": 3, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=1lZeLfo8qk0", "ep": 84, "ministry": "Geração Mulher"}, {"videoId": "_0AkOLUMKQI", "title": "Ira", "date": "2026-03-21", "views": 880, "comments": 3, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=_0AkOLUMKQI", "ep": 85, "ministry": "Geração Mulher"}, {"videoId": "WmmaVm2pmII", "title": "Avareza", "date": "2026-03-28", "views": 713, "comments": 64, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=WmmaVm2pmII", "ep": 86, "ministry": "Geração Mulher"}, {"videoId": "IRYBoGmOZ6g", "title": "Inveja", "date": "2026-04-03", "views": 640, "comments": 14, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=IRYBoGmOZ6g", "ep": 87, "ministry": "Geração Mulher"}, {"videoId": "y1oF3CU9nhc", "title": "Preguiça", "date": "2026-04-11", "views": 816, "comments": 3, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=y1oF3CU9nhc", "ep": 88, "ministry": "Geração Mulher"}, {"videoId": "jY7AY25StIA", "title": "Orgulho", "date": "2026-04-18", "views": 539, "comments": 17, "category": "Pecado & caráter", "topic": null, "url": "https://www.youtube.com/watch?v=jY7AY25StIA", "ep": 89, "ministry": "Geração Mulher"}, {"videoId": "ek4kiCphAQE", "title": "O verdadeiro propósito da educação cristã", "date": "2026-04-25", "views": 514, "comments": 2, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=ek4kiCphAQE", "ep": 90, "ministry": "Educação"}, {"videoId": "yHProUBIooo", "title": "Identidade em Cristo - formando crianças seguras Central", "date": "2026-05-01", "views": 376, "comments": 6, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=yHProUBIooo", "ep": 91, "ministry": "Educação"}, {"videoId": "inKjq60smLg", "title": "Identidade em Cristo - o propósito do ensino cristão", "date": "2026-05-12", "views": 245, "comments": 3, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=inKjq60smLg", "ep": 92, "ministry": "Educação"}, {"videoId": "APZnf_-l34E", "title": "Arquitetura do lar: edificando valores e construindo proteção", "date": "2026-05-16", "views": 385, "comments": 2, "category": "Família & lar", "topic": null, "url": "https://www.youtube.com/watch?v=APZnf_-l34E", "ep": 93, "ministry": "Educação"}, {"videoId": "tzNYlanyZ5o", "title": "A cultura do céu começa em casa", "date": "2026-05-23", "views": 278, "comments": 0, "category": "Cultura & sociedade", "topic": null, "url": "https://www.youtube.com/watch?v=tzNYlanyZ5o", "ep": 94, "ministry": "Educação"}, {"videoId": "XMR3j7R77-c", "title": "Evangelismo da teoria a prática", "date": "2026-05-30", "views": 464, "comments": 1, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=XMR3j7R77-c", "ep": 95, "ministry": "Evangelismo"}, {"videoId": "_-2DcyH_Wo4", "title": "Evangelismo, a prática real do ide", "date": "2026-06-06", "views": 475, "comments": 2, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=_-2DcyH_Wo4", "ep": 96, "ministry": "Evangelismo"}, {"videoId": "NHcv5BTaPuA", "title": "Capelania: esperança onde há sofrimento", "date": "2026-06-13", "views": 392, "comments": 4, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=NHcv5BTaPuA", "ep": 97, "ministry": "Evangelismo"}, {"videoId": "S6IZR2ZEs7o", "title": "Capelania: vivendo o cuidado de Cristo na prática", "date": "2026-06-20", "views": 261, "comments": 1, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=S6IZR2ZEs7o", "ep": 98, "ministry": "Evangelismo"}, {"videoId": "XqGFy5_-Gg8", "title": "Missões culturais: entendendo culturas para alcançar pessoas", "date": "2026-06-27", "views": 185, "comments": 1, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=XqGFy5_-Gg8", "ep": 99, "ministry": "Evangelismo"}, {"videoId": "dCsVGPaRVkk", "title": "Missões transculturais: vivendo missões além da zona de conforto", "date": "2026-07-04", "views": 196, "comments": 0, "category": "Evangelismo & missões", "topic": null, "url": "https://www.youtube.com/watch?v=dCsVGPaRVkk", "ep": 100, "ministry": "Evangelismo"}, {"videoId": "QeAOyXPC_-o", "title": "Por que todo cristão deveria estudar teologia?", "date": "2026-07-11", "views": 246, "comments": 2, "category": "Teologia & doutrina", "topic": null, "url": "https://www.youtube.com/watch?v=QeAOyXPC_-o", "ep": 101, "ministry": "Faculdade Teológica"}, {"videoId": "14AUAeCgdfE", "title": "Os perigos dos erros de interpretação", "date": "2026-07-18", "views": 345, "comments": 3, "category": "Teologia & doutrina", "topic": null, "url": "https://www.youtube.com/watch?v=14AUAeCgdfE", "ep": 102, "ministry": "Faculdade Teológica"}, {"videoId": "5Mcr0W6A0_s", "title": "Por que a igreja do século XXI precisa de cristãos bem formandos?", "date": "2026-07-25", "views": 288, "comments": 0, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=5Mcr0W6A0_s", "ep": 103, "ministry": "Faculdade Teológica"}, {"videoId": "toUk26lPov8", "title": "O próximo passo da sua fé começa com uma decisão", "date": "2026-08-01", "views": 249, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=toUk26lPov8", "ep": 104, "ministry": "Faculdade Teológica"}, {"videoId": "X0JmEdkd5hY", "title": "A melhor fase ainda pode estar pela frente", "date": "2026-08-08", "views": 372, "comments": 4, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=X0JmEdkd5hY", "ep": 105, "ministry": "Central Pleno"}, {"videoId": "pgb-maF6lm4", "title": "E se eu começar a esquecer?", "date": "2026-08-15", "views": 336, "comments": 2, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=pgb-maF6lm4", "ep": 106, "ministry": "Central Pleno"}, {"videoId": "gxSjdg_5Tjw", "title": "Ainda tenho forças para servir?", "date": "2026-08-22", "views": 472, "comments": 0, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=gxSjdg_5Tjw", "ep": 107, "ministry": "Central Pleno"}, {"videoId": "qO_7qso1Q9E", "title": "O que ficará quando eu partir?", "date": "2026-08-29", "views": 377, "comments": 0, "category": "Emoções & mente", "topic": null, "url": "https://www.youtube.com/watch?v=qO_7qso1Q9E", "ep": 108, "ministry": "Central Pleno"}, {"videoId": "bsnpanxMNuQ", "title": "Quem somos: serviço, propósito e transformação", "date": "2026-09-05", "views": 483, "comments": 2, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=bsnpanxMNuQ", "ep": 109, "ministry": "Homens de Honra"}, {"videoId": "gu5FX28GxMg", "title": "O homem e as aparências", "date": "2026-09-12", "views": 706, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=gu5FX28GxMg", "ep": 110, "ministry": "Homens de Honra"}, {"videoId": "8d0Kujh-rV0", "title": "O homem e os alertas da vida", "date": "2026-09-19", "views": 595, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=8d0Kujh-rV0", "ep": 111, "ministry": "Homens de Honra"}, {"videoId": "c2eGAzRCvXQ", "title": "Homem mecânico: conserta onde passa", "date": "2026-09-26", "views": 561, "comments": 2, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=c2eGAzRCvXQ", "ep": 112, "ministry": "Homens de Honra"}, {"videoId": "0uhezgGS45M", "title": "Editora Central", "date": "2026-10-03", "views": 554, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=0uhezgGS45M", "ep": 113, "ministry": "Editora Central"}, {"videoId": "hSaGVpgJano", "title": "Quebrando as correntes - Editora Central", "date": "2026-10-09", "views": 294, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=hSaGVpgJano", "ep": 114, "ministry": "Editora Central"}, {"videoId": "90t2uSytbdc", "title": "Coletânia batalha espiritual", "date": "2026-10-17", "views": 212, "comments": 0, "category": "Liderança & serviço", "topic": null, "url": "https://www.youtube.com/watch?v=90t2uSytbdc", "ep": 115, "ministry": "Editora Central"}, {"videoId": "qtzMOsnhP5k", "title": "Mulheres em processo", "date": "2026-10-24", "views": 778, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=qtzMOsnhP5k", "ep": 116, "ministry": "Editora Central"}, {"videoId": "oF6ZklLOTGU", "title": "Lugar de cura - Pra. Ezenete Rodrigues", "date": "2026-11-03", "views": 959, "comments": 2, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=oF6ZklLOTGU", "ep": 117, "ministry": null}, {"videoId": "cPz4sfssuCM", "title": "Muito antes da primeira nota: os sonhos que dão origem as cantatas de Natal", "date": "2026-11-14", "views": 402, "comments": 2, "category": "Igreja & comunidade", "topic": null, "url": "https://www.youtube.com/watch?v=cPz4sfssuCM", "ep": 118, "ministry": "Central Arts"}, {"videoId": "bjJjjG6IsUI", "title": "Coral e teatro Central Kids", "date": "2026-11-20", "views": 281, "comments": 0, "category": "Reflexões da fé", "topic": null, "url": "https://www.youtube.com/watch?v=bjJjjG6IsUI", "ep": 119, "ministry": "Central Arts"}];
+
+const _cnt = {};
+DATA.forEach(d => { _cnt[d.category] = (_cnt[d.category] || 0) + 1; });
+const CAT_ORDER = Object.keys(_cnt).sort((a, b) => (a === 'Reflexões da fé') - (b === 'Reflexões da fé') || _cnt[b] - _cnt[a] || a.localeCompare(b, 'pt-BR'));
+
+function fmt(n) { return n.toLocaleString('pt-BR'); }
+function fmtDate(iso) {
+  const [y,m,d] = iso.split('-');
+  const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  return `${d} ${months[parseInt(m,10)-1]} ${y}`;
+}
+
+let state = { query: '', category: 'Todos', ministry: 'Todos', sort: 'recent' };
+
+const catCounts = {};
+DATA.forEach(d => { catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+
+function renderThemeChips() {
+  const cats = ['Todos', ...CAT_ORDER.filter(c => catCounts[c])];
+  const row = document.getElementById('chipRow');
+  row.innerHTML = cats.map(c => {
+    const count = c === 'Todos' ? DATA.length : catCounts[c];
+    const pressed = state.category === c;
+    return `<button class="chip" data-cat="${c}" aria-pressed="${pressed}">${c}<span class="count">${count}</span></button>`;
+  }).join('');
+  row.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.category = btn.dataset.cat;
+      row.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      renderGrid();
+    });
+  });
+}
+
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+function matches(d) {
+  if (state.category !== 'Todos' && d.category !== state.category) return false;
+  if (state.ministry !== 'Todos' && d.ministry !== state.ministry) return false;
+  if (state.query) {
+    const q = norm(state.query);
+    const hay = norm(d.title + ' ' + (d.topic || '') + ' ' + d.category + ' ' + (d.ministry || ''));
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function sortRows(rows) {
+  const r = rows.slice();
+  if (state.sort === 'recent') r.sort((a,b) => b.date.localeCompare(a.date));
+  else if (state.sort === 'views') r.sort((a,b) => b.views - a.views);
+  else if (state.sort === 'comments') r.sort((a,b) => b.comments - a.comments);
+  else if (state.sort === 'az') r.sort((a,b) => a.title.localeCompare(b.title, 'pt-BR'));
+  return r;
+}
+
+function cardHtml(d) {
+  const blurb = d.topic || '';
+  return `
+  <div class="card-wrap"><a class="card" href="${d.url}" target="_blank" rel="noopener" aria-label="${d.title.replace(/"/g, '&quot;')}, episódio ${d.ep}, abre no YouTube">
+    <div class="thumb-wrap">
+      <img src="thumbs/v-${d.videoId}.jpg" alt="" loading="lazy" width="320" height="180" onerror="this.remove()">
+      <span class="ep-badge">EP. ${d.ep}</span>
+      <span class="play-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M6 4l14 8-14 8V4z"/></svg>
+      </span>
+    </div>
+    <div class="card-body">
+      <span class="cat-tag">${d.category}${d.ministry ? ' · ' + d.ministry : ''}</span>
+      <p class="card-title">${d.title}</p>
+      ${blurb ? `<p class="card-blurb">${blurb}</p>` : ''}
+      <div class="card-foot">
+        <span>${fmtDate(d.date)}</span>
+        <span class="stats">
+          <span>${fmt(d.views)} views</span>
+          <span>${fmt(d.comments)} coment.</span>
+        </span>
+      </div>
+    </div>
+  </a>
+  <button class="share-btn" type="button" data-vid="${d.videoId}" aria-label="Compartilhar o episódio ${d.title.replace(/"/g, '&quot;')}"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button></div>`;
+}
+
+function renderGrid() {
+  syncSelects();
+  const rows = sortRows(DATA.filter(matches));
+  const grid = document.getElementById('grid');
+  document.getElementById('resultCount').textContent = `${rows.length} de ${DATA.length} episódios`;
+  if (!rows.length) {
+    grid.innerHTML = `<div class="empty-state">
+      <h2 class="big">Nenhum episódio encontrado</h2>
+      <div>Tente outro termo ou volte para todos os temas.</div>
+      <button id="clearBtn" type="button">Limpar filtros</button>
+    </div>`;
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      state.query = ''; state.category = 'Todos'; state.ministry = 'Todos';
+      document.getElementById('searchInput').value = '';
+      renderChips(); renderGrid();
+    });
+    return;
+  }
+  grid.innerHTML = rows.map(cardHtml).join('');
+}
+
+function renderStats() {
+  const totalViews = DATA.reduce((s,d) => s + d.views, 0);
+  const years = [...new Set(DATA.map(d => d.date.slice(0,4)))].sort();
+  document.getElementById('statStrip').innerHTML = `
+    <span><b>${DATA.length}</b> episódios</span>
+    <span><b>${fmt(totalViews)}</b> visualizações somadas</span>
+    <span><b>${CAT_ORDER.filter(c => catCounts[c]).length}</b> temas</span>
+    <span><b>${years[0]}–${years[years.length-1]}</b></span>
+  `;
+}
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  state.query = e.target.value.trim();
+  renderGrid();
+});
+document.getElementById('sortSelect').addEventListener('change', (e) => {
+  state.sort = e.target.value;
+  renderGrid();
+});
+
+function renderMinistries() {
+  const row = document.getElementById('minRow');
+  const mins = [...new Set(DATA.map(d => d.ministry).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  if (!mins.length) { row.innerHTML = ''; row.style.marginTop = '0'; return; }
+  row.style.marginTop = '8px';
+  const counts = {}; DATA.forEach(d => { if (d.ministry) counts[d.ministry] = (counts[d.ministry] || 0) + 1; });
+  row.innerHTML = '<span class="chip-label">Ministério</span>' + ['Todos', ...mins].map(m => {
+    const pressed = state.ministry === m;
+    return `<button class="chip" data-min="${m}" aria-pressed="${pressed}">${m}${m === 'Todos' ? '' : `<span class="count">${counts[m]}</span>`}</button>`;
+  }).join('');
+  row.querySelectorAll('.chip').forEach(btn => btn.addEventListener('click', () => {
+    state.ministry = btn.dataset.min;
+    row.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    renderGrid();
+  }));
+}
+function renderChips() { renderThemeChips(); renderMinistries(); }
+
+function toast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2200);
+}
+async function shareLink(title, url) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text: title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(url); toast('Link copiado'); }
+  catch (e) { window.prompt('Copie o link:', url); }
+}
+document.getElementById('grid').addEventListener('click', (e) => {
+  const b = e.target.closest('.share-btn');
+  if (!b) return;
+  const d = DATA.find(x => x.videoId === b.dataset.vid);
+  if (d) shareLink(d.title + ' — Sexta ON', d.url);
+});
+document.getElementById('shareSite').addEventListener('click', () => shareLink('Biblioteca Sexta ON', location.href));
+
+function populateSelects() {
+  const ts = document.getElementById('themeSelect');
+  ts.innerHTML = `<option value="Todos">Todos os temas (${DATA.length})</option>` +
+    CAT_ORDER.map(c => `<option value="${c}">${c} (${catCounts[c]})</option>`).join('');
+  const counts = {}; DATA.forEach(d => { if (d.ministry) counts[d.ministry] = (counts[d.ministry] || 0) + 1; });
+  const mins = Object.keys(counts).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const ms = document.getElementById('minSelect');
+  ms.innerHTML = '<option value="Todos">Todos os ministérios</option>' + mins.map(m => `<option value="${m}">${m} (${counts[m]})</option>`).join('');
+  document.getElementById('minSelectWrap').hidden = !mins.length;
+  document.getElementById('filterSelects').classList.toggle('single', !mins.length);
+  ts.addEventListener('change', () => { state.category = ts.value; renderChips(); renderGrid(); });
+  ms.addEventListener('change', () => { state.ministry = ms.value; renderChips(); renderGrid(); });
+}
+function syncSelects() {
+  const ts = document.getElementById('themeSelect'), ms = document.getElementById('minSelect');
+  if (!ts || !ms) return;
+  ts.value = state.category; ms.value = state.ministry;
+  ts.classList.toggle('active', state.category !== 'Todos');
+  ms.classList.toggle('active', state.ministry !== 'Todos');
+}
+populateSelects();
+
+renderStats();
+renderChips();
+renderGrid();
+</script>
+</body>
+</html>
